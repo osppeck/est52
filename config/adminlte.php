@@ -346,6 +346,13 @@ return [
             'label'       => 'CRUD',
             'label_color' => 'warning',
         ],
+        [
+            'text'        => 'pruebas',
+            'url'         => '/pruebas',
+            'icon'        => 'far fa-fw fa-file',
+            'label'       => 'CRUD',
+            'label_color' => 'warning',
+        ],
         ['header' => 'Configuración de la cuenta'],
         [
             'text' => 'perfil de usuario',

@@ -62,7 +62,7 @@ class PersonaController extends Controller
         //
     }
 
-    public function update(Request $request, $id)
+    public function update()
     {
         //
     }
@@ -73,4 +73,18 @@ class PersonaController extends Controller
         $personaABorrar-> delete();
         return redirect('/personas');
     }
+
+
+    public  function ultimoRegistro()
+    {
+        $checar= new Persona;
+        $temporal =$checar->latest('id')->first();
+        return $temporal;
+    }
+    public  function getDatos($fk)
+    {
+        $datos = Persona::find($fk);
+        return $datos;
+    }
+
 }

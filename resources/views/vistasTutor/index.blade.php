@@ -1,85 +1,59 @@
-@extends('adminlte::page')
+@extends('vistasPersona.indexPersona')
 
-@section('title', 'READ_TUTORES')
+@section('header')
+    <p> INDEX TUTORES</p>
+@endsection
 
-@section('content_header')
-    <h1>VISTA INDEX TUTORES</h1>
-@stop
+@section('hrefCrear')
+    {{ route('tutores.create') }}
+@endsection
 
-@section('content')
-    <!-- 5.- CREAMOS LA VISTA , YA TENEMOS LOS DATOS HEREDAMOS DE adminlte-->
+@section('nameColumnas')
+    <th scope="col">TEL1</th>
+    <th scope="col">TEL2</th>
+    <th scope="col">CORREO P.</th>
+    <th scope="col">ESTADO M.</th>
+    <th scope="col">MUNICIPIO</th>
+    <th scope="col">COLONIA</th>
+    <th scope="col">CALLE</th>
+    <th scope="col">NÚMERO</th>
+    <th scope="col">Acciones</th>
+@endsection
 
-    <p>Bienvenid@ al  Sistema integral de información de la EST 52.</p>
-    
-    <!-- este enlace llama a un METODO¡¡¡¡ de controlador dentro de la carpeta ...http/controllers/ -->
-    <!-- debe llamarse igual...  METODO()¡¡¡¡ASDASDSADASDasdSaDsaDASd-->
-    <a href="/tutores/create" class="btn btn-primary">CREAR</a>
-<!--<a href="{. route('materias.create') }}"  es otra manera iguial-->
+@section('valueColumnas')
+    @forelse($personas as $persona)
+                    <tr>
+                        <td>{{ $persona->id }}</td>
+                        <td>{{ $persona->nombre}}</td>
+                        <td>{{ $persona->apellido_p}}</td>
+                        <td>{{ $persona->apellido_m}}</td>
+                        <td>{{ $persona->sexo}}</td>
+                        <td>{{ $persona->fecha_nacimiento}}</td>
+                        <td>AÑOSXD</td>
 
-    <table id="tablaMaterias" class="table table-striped table-bordered shadow-lg mt-4" style="width:100%">
-        <thead class="bg-primary text-white">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">TEL #1</th>
-                <th scope="col">TEL #2</th>
-                <th scope="col">CORREO</th>
-                <th scope="col">ESTADO</th>
-                <th scope="col">MUNICIPIO</th>
-                <th scope="col">COLONIA</th>
-                <th scope="col">CALLE</th>
-                <th scope="col">NÚMERO</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($tutores as $tutores)
-                <tr>
-                    <td>{{ $id->id }}</td>
-                    <td>{{ $telefono_1->telefono_1}}</td>
-                    <td>{{ $telefono_2->telefono_2}}</td>
-                    <td>{{ $correo->correo}}</td>
-                    <td>{{ $estado->estado }}</td>
-                    <td>{{ $municipio->municipio}}</td>
-                    <td>{{ $colonia->colonia }}</td>
-                    <td>{{ $calle->calle }}</td>
-                    <td>{{ $numero->numero}}</td>
-                    <td>
-                            <!-- llamada a un método del objeto materia en cuestión, ni idea de poqeu es materias y no materia -->
-                        <form action="{{ route('tutores.destroy',$tutor->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <!-- igual llama a un método edit($id) los parametros van antes-->
-                            <!-- es la primera< vez durante el roceso que se eneran rutas dinamicas(rutas de metodos)-->
-                            <a href="/tutores/{{ $tutor->id }}/edit" class="btn btn-info">Editar</a>
-                            <button type="submit" class="btn btn-danger">Borrar</button>
-                        </form>
-                    </td>
-                    
-                </tr>
-            @empty
-                <p>NO HAY DATOS PARA MOSTRAR</p>
-            @endforelse
-        </tbody>
-    </table>  
-    <!-- 6.- añadimos el apartado en el panel en aap/config/adminLTE ya podemos corer la vista-->
-
-
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
-
-@stop
-
-@section('js')
-    <script> console.log('Hi!'); </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-
-        <script>
-            $(document).ready(function () {
-                $('#tablaMaterias').DataTable();
-            });
-        </script>
+                        @foreach ($tutores as $tutor)
+                            @if ($tutor->persona_id==$persona->id)
+                                <td>{{ $tutor->telefono_1 }}</td>
+                                <td>{{ $tutor->telefono_2}}</td>
+                                <td>{{ $tutor->correo}}</td>
+                                <td>{{ $tutor->estado}}</td>
+                                <td>{{ $tutor->municipio}}</td>
+                                <td>{{ $tutor->colonia}}</td>
+                                <td>{{ $tutor->calle}}</td>
+                                <td>{{ $tutor->numero}}</td>
+                                <td>
+                                    <form action="{{ route('tutores.destroy',$tutor->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a href="/tutores/{{ $tutor->id }}/edit" class="btn btn-info">Editar</a>
+                                        <button type="submit" class="btn btn-danger">Borrar</button>
+                                    </form>
+                                </td>
+                            @endif
+                        @endforeach
+                        
+                    </tr>
+                @empty
+        <p>NO HAY DATOS PARA MOSTRAR</p>
+    @endforelse
 @stop

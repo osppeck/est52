@@ -42,11 +42,6 @@ class MateriaController extends Controller
         return redirect('/materias');
     }
 
-    public function show($id)
-    {
-        //
-    }
-
     public function edit($id)
     {
         //9.-Creamos la función y vista para la llamada al boton editarde cada fila

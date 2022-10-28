@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <!-- **! 5.-la variable nombre se gauarda mal en la BD-->
+    
 
     <p>Bienvenid@ al  Sistema integral de información de la EST 52.</p>
 
