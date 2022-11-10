@@ -15,10 +15,10 @@ class TutorController extends Controller
     
     public function index()
     {
-        $tutores= Tutor::all();
-        $personas= Persona::find($tutores->modelKeys());
+        $tutores=Tutor::all();
+        return view('vistasTutor.index',compact('tutores'));
 
-        return view('vistasTutor.index',compact('tutores','personas'));
+        //return view('vistasTutor.index',compact('tutores','personas'));
     }
 
     public function create()

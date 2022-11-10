@@ -18,12 +18,12 @@
         </div>
 
         <div class="mb-3">
-            <label for="" class="form-label">Apellido_p: </label>
+            <label for="" class="form-label">Apellido paterno: </label>
             <input type="text" class="form-control" id="apellido_p" name="apellido_p" value="{{ $persona->apellido_p }}">
         </div>
 
         <div class="mb-3">
-            <label for="" class="form-label">Apellido_m: </label>
+            <label for="" class="form-label">Apellido materno: </label>
             <input type="text" class="form-control" id="apellido_m" name="apellido_m" value="{{ $persona->apellido_m }}">
         </div>
 

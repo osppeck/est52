@@ -16,7 +16,7 @@
 
     <div class="mb-3">
         <label for="" class="form-label">Teléfono 1: </label>
-        <input type="text" class="form-control" name="telefono_1" id="telefono_1" value="{{ $persona->nombre }}">
+        <input type="text" class="form-control" name="telefono_1" id="telefono_1" value="{{ $tutor->telefono_1 }}">
     </div>
 
     <div class="mb-3">

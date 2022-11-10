@@ -50,7 +50,6 @@ return new class extends Migration
                 $table->unsignedBigInteger("persona_id");
                 $table->foreign('persona_id')->references('id')->on('persona');
             });
-
             
             Schema::create('trabajador', function (Blueprint $table) {
                 $table->id('id');
@@ -61,7 +60,11 @@ return new class extends Migration
                 $table->boolean('status');
 
                 $table->unsignedBigInteger("persona_id");
-                $table->foreign('persona_id')->references('id')->on('persona');
+                $table->foreign('persona_id')
+                    ->references('id')
+                    ->on('persona')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
             });
 
 
@@ -69,15 +72,17 @@ return new class extends Migration
                     $table->id('id');
 
                     $table->unsignedBigInteger("trabajador_id");
-                    $table->foreign('trabajador_id')->references('id')->on('trabajador');
-
+                    $table->foreign('trabajador_id')
+                    ->references('id')
+                    ->on('trabajador')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
                 });
 
                     Schema::create('aula', function (Blueprint $table) {
                         $table->id('id');
                         $table->string('nombre');
                         $table->text('comentarios');
-
                     });
 
                     Schema::create('materia', function (Blueprint $table) {
@@ -99,18 +104,33 @@ return new class extends Migration
                     $table->id('id');
                     $table->time('horaE');
                     $table->time('horaS');
+                    $table->string('dias');
 
-                    $table->unsignedBigInteger("docente_id");
-                    $table->foreign('docente_id')->references('id')->on('docente');
-
+                    
                     $table->unsignedBigInteger("materia_id");
-                    $table->foreign('materia_id')->references('id')->on('materia');
+                    $table->foreign('materia_id')
+                    ->references('id')
+                    ->on('materia')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
 
-                    $table->unsignedBigInteger("grupo_id");
-                    $table->foreign('grupo_id')->references('id')->on('grupo');
+                    $table->unsignedBigInteger("docente_id")->nullable();
+                    $table->foreign('docente_id')
+                    ->references('id')
+                    ->on('docente')
+                    ->onDelete('set null');
 
-                    $table->unsignedBigInteger("aula_id");
-                    $table->foreign('aula_id')->references('id')->on('aula');
+                    $table->unsignedBigInteger("grupo_id")->nullable();
+                    $table->foreign('grupo_id')
+                    ->references('id')
+                    ->on('grupo')
+                    ->onDelete('set null');
+
+                    $table->unsignedBigInteger("aula_id")->nullable();
+                    $table->foreign('aula_id')
+                    ->references('id')
+                    ->on('aula')
+                    ->onDelete('set null');
                 });
 
 
@@ -123,17 +143,27 @@ return new class extends Migration
             $table->integer('grado');
 
             $table->unsignedBigInteger("persona_id");
-            $table->foreign('persona_id')->references('id')->on('persona');
+            $table->foreign('persona_id')
+                ->references('id')
+                ->on('persona')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->unsignedBigInteger("tutor_id")->nullable();
-            $table->foreign('tutor_id')->references('id')->on('tutor');
+            $table->foreign('tutor_id')
+            ->references('id')
+            ->on('tutor')
+            ->onDelete('set null');
 
             $table->unsignedBigInteger("grupo_id")->nullable();
-            $table->foreign('grupo_id')->references('id')->on('grupo');
+            $table->foreign('grupo_id')
+            ->references('id')
+            ->on('grupo')
+            ->onDelete('set null');
 
         });
 
-            Schema::create('calificaciones', function (Blueprint $table) {
+            Schema::create('calificacion', function (Blueprint $table) {
                 $table->id('id');
                 $table->integer('periodo');
                 $table->boolean('examenR');
@@ -141,10 +171,17 @@ return new class extends Migration
                 $table->integer('faltas');
                 
                 $table->unsignedBigInteger("alumno_id");
-                $table->foreign('alumno_id')->references('id')->on('alumno');
+                $table->foreign('alumno_id')
+                    ->references('id')
+                    ->on('alumno')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
 
-                $table->unsignedBigInteger("clase_id");
-                $table->foreign('clase_id')->references('id')->on('clase');
+                $table->unsignedBigInteger("clase_id")->nullable();
+                $table->foreign('clase_id')
+                    ->references('id')
+                    ->on('clase')
+                    ->onDelete('set null');
 
                 $table->timestamps();
             });
@@ -156,21 +193,22 @@ return new class extends Migration
                 $table->text('observaciones');
                 $table->date('fecha');
                 
-                $table->unsignedBigInteger("alumno_id");
-                $table->foreign('alumno_id')->references('id')->on('alumno');
+                $table->unsignedBigInteger("alumno_id")->nullable();
+                $table->foreign('alumno_id')
+                    ->references('id')
+                    ->on('alumno')
+                    ->onDelete('cascade');
 
-                $table->unsignedBigInteger("trabajador_id");
-                $table->foreign('trabajador_id')->references('id')->on('trabajador');
+                $table->unsignedBigInteger("trabajador_id")->nullable();
+                $table->foreign('trabajador_id')
+                    ->references('id')
+                    ->on('trabajador')
+                    ->onDelete('set null');
 
             });
 
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('users');

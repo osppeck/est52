@@ -5,20 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tutor extends Model
+class Trabajador extends Model
 {
     use HasFactory;
-    protected $table='tutor';
+
+    protected $table='trabajador';
     public $timestamps=false;
 
     public function persona(){
         return $this->belongsTo('App\Models\Persona');
     }
 
-    //relaciión uno a muchos
-
-    public function alumnos(){
-        return $this->hasMany('App\Models\Alumno');
-    }
     
+    public function docente(){
+        return $this->hasOne('App\Models\Docente');
+    }
+
+    //relación uno a muchos
+    public function reportes(){
+        return $this->hasMany('App\Models\Reportes');
+    }
+
 }
