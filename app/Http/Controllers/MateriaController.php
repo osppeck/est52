@@ -9,10 +9,13 @@ use App\Models\Materia;
 
 class MateriaController extends Controller
 {
+    //función de validación, validará los campos de request a traves del name para create y edit
+    
     //protejer el panel para usuarios con el contructor padre
     public function __construct(){
         $this->middleware('auth');
     }
+
     public function index()
     {
         //retornar toda la tabla, metodo por defecto tipo constrctor,
@@ -22,6 +25,8 @@ class MateriaController extends Controller
         return view('vistasMateria.index',compact('materias'));
         //3 CREAR EL DIRECTRORIO DE VISTAS DE ESTA CLASE------4->rutas--------------------------
     }
+
+    
 
     public function create()
     {
@@ -34,6 +39,10 @@ class MateriaController extends Controller
     {
         //8.- creamos store que se activa al recibir un submit, ya podemos crear
         //creamos la vista
+
+        //función de validación de formulario
+        $this->validar($request);
+
         $materia=new Materia();
         $materia->nombre=$request->get('nombre');
         $materia->programa=$request->get('programa');
@@ -53,6 +62,9 @@ class MateriaController extends Controller
     public function update(Request $request, $id)
     {
         //creamos el update se ejecuta solo cuadno recibe el submit de edit, ya podemos editar
+
+        $this->validar($request);
+
         $materiaAEditar=Materia::find($id);
         $materiaAEditar->nombre=$request->get('nombre');
         $materiaAEditar->programa=$request->get('programa');
@@ -67,5 +79,14 @@ class MateriaController extends Controller
         $materiaABorrar =Materia::find($id);
         $materiaABorrar->delete();
         return redirect('/materias');
+    }
+
+    public function validar(Request $request)
+    {
+        //FUNCIÓN AUXILIAR DE VALIDACIÓN DEl formualrio
+        $this->validate($request, [
+            'nombre'=>'required|between:3,10',
+            'programa'=>'required'
+        ]);
     }
 }

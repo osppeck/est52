@@ -14,66 +14,45 @@ class GrupoController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+
         //Grupo::all();//todos los registros de la tabla
         $grupos= Grupo::all();
 
         return view('vistasGrupo.index',compact('grupos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
         return view('vistasGrupo.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
     public function store(Request $request)
     {
-        //
-        $grupo=new Grupo();
-        $grupo->nombre=$request->get('nombre');
-        $grupo->ciclo=$request->get('ciclo');
+        //validamos primero antes que todo
+        $this->validar($request);
 
+        $grupo=new Grupo();
+        $grupo->nombre=$request->get('grados') . $request->get('grupos');
+
+        if($request->get('grupos')=="X"){
+            $this->validar($request);
+            $grupo->nombre=$request->get('grados') . $request->get('otro');
+        }
+        
+
+        $grupo->ciclo=$request->get('ciclo1')."-".$request->get('ciclo2');
         $grupo->save();
         return redirect('/grupos');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
@@ -82,29 +61,20 @@ class GrupoController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
+
         $grupoAEditar=Grupo::find($id);
-        $grupoAEditar->nombre=$request->get('nombre');
-        $grupoAEditar->ciclo=$request->get('ciclo');
+        $nombre=$request->get('nombre').$request->get('grupo');
+
+        $grupoAEditar->nombre=$nombre;
+        $grupoAEditar->ciclo=$request->get('ciclo1')."-".$request->get('ciclo2');
+
 
         $grupoAEditar->save();
         return redirect('/grupos');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
@@ -112,4 +82,15 @@ class GrupoController extends Controller
         $grupoABorrar->delete();
         return redirect('/grupos');
     }
+
+    public function validar(Request $request)
+    {
+        //FUNCIÓN AUXILIAR DE VALIDACIÓN DEl formualrio
+        $this->validate($request, [
+            'otro'=>'required_if:grupos,X',
+            'ciclo1'=>'required',
+            'ciclo2'=>'required'
+        ]);
+    }
+
 }

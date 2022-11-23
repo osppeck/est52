@@ -4,6 +4,11 @@
 
 @section('content_header')
     <h1>CREAR NUEVA MATERIA</h1>
+    <style>
+        .error{
+            color: rgb(182, 20, 20);
+        }
+    </style>
 @stop
 
 @section('content')
@@ -12,13 +17,28 @@
         @csrf
         <div class="mb-3">
             <label for="" class="form-label">Nombre: </label>
-            <input type="text" class="form-control" name="nombre" id="nombre" >
             <div id="leyendaNombre" class="form-text">nombre o tag para identificar la materia</div>
+            <input type="text" 
+                class="form-control" 
+                name="nombre" 
+                id="nombre" 
+                value="{{ old('nombre') }}"
+                placeholder=""  
+                autofocus>
+                
+                {!! $errors->first('nombre','<span class=error>:message</span>') !!}
+            
         </div>
 
         <div class="mb-3">
             <label for="" class="form-label">Programa: </label>
-            <input type="text" class="form-control" id="programa" name="programa">
+            <input type="text" 
+                class="form-control" 
+                id="programa" 
+                name="programa" 
+                value="{{ old('programa') }}">
+                <span></span>
+            {!! $errors->first('programa','<span class=error>:message</span>') !!}
         </div>
         
         

@@ -3,7 +3,7 @@
 @section('title', 'READ_GRUPOS')
 
 @section('content_header')
-    <h1>VISTA INDEX</h1>
+    <h1>VISTA INDEX GRUPOS</h1>
 @stop
 
 @section('content')

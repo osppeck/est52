@@ -32,6 +32,7 @@ class AulaController extends Controller
 
     public function store(Request $request)
     {
+        $this->validar($request);
         $aula=new Aula();
         $aula->nombre=$request->get('nombre');
         $aula->comentarios=$request->get('comentarios');
@@ -57,6 +58,7 @@ class AulaController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validar($request);
         $aulaAEditar=Aula::find($id);
         $aulaAEditar->nombre=$request->get('nombre');
         $aulaAEditar->comentarios=$request->get('comentarios');
@@ -71,5 +73,14 @@ class AulaController extends Controller
         $aulaABorrar =Aula::find($id);
         $aulaABorrar->delete();
         return redirect('/aulas');
+    }
+
+    public function validar(Request $request)
+    {
+        //FUNCIÓN AUXILIAR DE VALIDACIÓN DEl formualrio
+        $this->validate($request, [
+            'nombre'=>'required',
+            'comentarios'=>'required'
+        ]);
     }
 }

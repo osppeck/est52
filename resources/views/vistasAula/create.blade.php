@@ -12,13 +12,16 @@
         @csrf
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
-            <input type="text" class="form-control" name="nombre" id="nombre" aria-describedby="emailHelp">
-            <div id="leyendaNombre" class="form-text">nombre o tag para identificar el grupo</div>
+            <input type="text" class="form-control" name="nombre" id="nombre" aria-describedby="emailHelp"
+            value="{{ old('nombre') }}">
+            {!! $errors->first('nombre','<span class=error>:message</span>') !!}
+            <div id="nombre" class="form-text">nombre o tag para identificar el grupo</div>
         </div>
 
         <div class="mb-3">
             <label for="" class="form-label">Comentarios</label>
-            <input type="text" class="form-control" id="comentarios" name="comentarios">
+            <textarea name="comentarios" id="comentarios" class="form-control" value="{{ old('comentarios') }}"></textarea>
+            {!! $errors->first('comentarios','<span class=error>:message</span>') !!}
         </div>
         
         

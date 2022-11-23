@@ -13,13 +13,25 @@
         @method('PUT')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
-            <input type="text" class="form-control" name="nombre" id="nombre" aria-describedby="emailHelp" value="{{ $materia->nombre }}">
+            <input type="text" 
+            class="form-control" 
+            name="nombre" 
+            id="nombre" 
+            aria-describedby="emailHelp" 
+            value="{{ $materia->nombre }}"
+            required maxlength="25">
+            {!! $errors->first('nombre','<span class=error>:message</span>') !!}
             <div id="leyendaNombre" class="form-text">nombre o tag para identificar la materia</div>
         </div>
 
         <div class="mb-3">
             <label for="" class="form-label">Programa: </label>
-            <input type="text" class="form-control" id="programa" name="programa" value="{{ $materia->programa}}">
+            <input type="text" 
+            class="form-control" 
+            id="programa" name="programa" 
+            value="{{ $materia->programa}}"
+            required maxlength="10">
+            {!! $errors->first('programa','<span class=error>:message</span>') !!}
         </div>
         
         
