@@ -28,6 +28,7 @@ class TutorController extends Controller
 
     public function store(Request $request)
     {
+        $this->validar($request);
         $tutorPersona = new PersonaController;
         $tutorPersona->storeTutor($request);
 
@@ -48,6 +49,10 @@ class TutorController extends Controller
         $tutor->numero= $request->input('numero');
         $tutor->persona_id= $fkTutor;
         
+        if($request->input('numero')==''){
+            $tutor->numero= 'S/N';
+        }
+
         $tutor->save();
 
         return redirect('/tutores');
@@ -72,6 +77,7 @@ class TutorController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validar($request);
         //creamos el update se ejecuta solo cuadno recibe el submit de edit, ya podemos editar
         $tutorAEditar = Tutor::find($id);
         $personaAEditar = Persona::find($tutorAEditar->persona_id);
@@ -91,6 +97,10 @@ class TutorController extends Controller
         $tutorAEditar->calle=$request->get('calle');
         $tutorAEditar->numero=$request->get('numero');
 
+        if($request->input('numero')==''){
+            $tutorAEditar->numero='S/N';
+        }
+
         $personaAEditar->save();
         $tutorAEditar->save();
         return redirect('/tutores');
@@ -105,5 +115,24 @@ class TutorController extends Controller
         $personaAEditar->delete();
 
         return redirect('/tutores');
+    }
+
+    public function validar(Request $request)
+    {
+        //FUNCIÓN AUXILIAR DE VALIDACIÓN DEl formualrio
+        $this->validate($request, [
+            'nombre'=>'required',
+            'apellido_p'=>'required|between:3,10',
+            'apellido_m'=>'required',
+            'sexo'=>'required',
+            'fecha_nacimiento'=>'required',
+            'telefono_1'=>'required|numeric|digits:10',
+            'telefono_2'=>'required|numeric|digits:10',
+            'correo'=>'required|email',
+            'estado'=>'required',
+            'municipio'=>'required',
+            'colonia'=>'required',
+            'calle'=>'required',
+        ]);
     }
 }

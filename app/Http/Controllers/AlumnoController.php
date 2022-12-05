@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Alumno;
 use App\Models\Persona;
+use App\Models\Tutor;
+use App\Models\Grupo;
 
 class AlumnoController extends Controller
 {
@@ -20,11 +22,14 @@ class AlumnoController extends Controller
 
     public function create()
     {
-        return view('vistasAlumno.create');
+        $tutores=Tutor::all();
+        $grupos=Grupo::all();
+        return view('vistasAlumno.create',compact('tutores','grupos'));
     }
 
     public function store(Request $request)
     {
+        $this->validar($request);
         $alumno=new Alumno();
         $persona=new Persona();
 
@@ -60,6 +65,8 @@ class AlumnoController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validar($request);
+
         $alumno = Alumno::find($id);
 
         $alumno->persona->nombre = $request->get('nombre');
@@ -85,4 +92,20 @@ class AlumnoController extends Controller
         Alumno::find($id)->persona()->delete();
         return redirect('/alumnos');
     }
+
+    public function validar(Request $request)
+    {
+        //FUNCIÓN AUXILIAR DE VALIDACIÓN DEl formualrio
+        $this->validate($request, [
+            'nombre'=>'required',
+            'apellido_p'=>'required',
+            'apellido_m'=>'required',
+            'sexo'=>'required',
+            'curp'=>'required',
+            'status'=>'required',
+            'fechaInscripcion'=>'required',
+            'grado'=>'required'
+        ]);
+    }
+
 }

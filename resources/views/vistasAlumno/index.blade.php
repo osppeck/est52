@@ -35,13 +35,13 @@
             <td>{{ $alumno->persona->apellido_m}}</td>
             <td>{{ $alumno->persona->sexo}}</td>
             <td>{{ $alumno->persona->fecha_nacimiento}}</td>
-            <td>AÑOSXD</td>
+            <td>{{ date_diff(date_create($alumno->persona->fecha_nacimiento), date_create(now()))->format('%y')}}</td>
 
             <td>{{ $alumno->curp}}</td>
             <td>{{ $alumno->status}}</td>
             <td>{{ $alumno->fechaInscripcion}}</td>
             <td>{{ $alumno->grado}}</td>
-            <td>{{ $alumno->tutor_id}}</td>
+            <td>{{ $alumno->tutor->persona->nombre}}</td>
 
             <td>
                 <form action="{{ route('alumnos.destroy',$alumno->id) }}" method="POST">

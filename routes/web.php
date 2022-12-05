@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CredencializacionController;
+use App\Http\Controllers\SecCredencializacionController;
+use App\Http\Controllers\SecBoletasController;
 
 
 
@@ -33,6 +36,19 @@ Route::resource('/reportes', 'App\Http\Controllers\ReporteController')->names('r
 Route::resource('/clases', 'App\Http\Controllers\ClaseController')->names('clases');
 
 Route::resource('/calificaciones','App\Http\Controllers\CalificacionController')->names('calificaciones');
+
+
+//rutas para EL MÓDULO secretaria
+Route::resource('/inscripciones','App\Http\Controllers\InscripcionController')->names('inscripciones');
+
+Route::resource('/credencializacion',SecCredencializacionController::class)->names('credencializacion');
+Route::resource('/boletas',SecBoletasController::class)->names('boletas');
+
+
+Route::get('/inscripcion', function () {
+    return view('modSecretaria.inscripcionCreate');
+});
+
 
 
 //RUTAS DE LOGIUN Y USUARIOIS

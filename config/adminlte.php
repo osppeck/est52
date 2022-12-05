@@ -312,6 +312,20 @@ return [
             'can'  => 'manage-blog',
         ],
         [
+            'text'        => 'S. Inscripciones',
+            'url'         => '/inscripciones',
+            'icon'        => 'far fa-fw fa-file',
+            'label'       => 'C',
+            'label_color' => 'warning',
+        ],
+        [
+            'text'        => 'S. Inscripción',
+            'url'         => '/inscripcion',
+            'icon'        => 'far fa-fw fa-file',
+            'label'       => 'C',
+            'label_color' => 'warning',
+        ],
+        [
             'text'        => 'Clases',
             'url'         => '/clases',
             'icon'        => 'far fa-fw fa-file',
